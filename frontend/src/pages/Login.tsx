@@ -6,7 +6,7 @@ import { SiPlanetscale } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 
-type LoginFormType = {
+export type LoginFormType = {
   email: string;
   password: string;
 };

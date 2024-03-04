@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 
-type RegisterFormType = {
+export type RegisterFormType = {
   name: string;
   email: string;
   password: string;
