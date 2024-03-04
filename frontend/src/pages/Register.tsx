@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import RegisterImg from "../assets/bg-1.jpg";
@@ -15,6 +15,8 @@ type RegisterFormType = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     watch,
@@ -32,7 +34,10 @@ const Register = () => {
       <div className="hidden md:flex w-full h-full flex-1">
         <img src={RegisterImg} alt="" className="w-full h-full object-cover" />
 
-        <span className="w-[80px] h-[30px] absolute inset-0 top-4 left-10 cursor-pointer flex items-center gap-1 text-[20px]">
+        <span
+          className="w-[80px] h-[30px] absolute inset-0 top-4 left-10 cursor-pointer flex items-center gap-1 text-[20px]"
+          onClick={() => navigate("/")}
+        >
           <SiPlanetscale />
           <span className="font-bold">LOGO</span>
         </span>
