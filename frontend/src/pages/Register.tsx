@@ -1,16 +1,41 @@
+import { Link } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+
 import RegisterImg from "../assets/bg-1.jpg";
+import { SiPlanetscale } from "react-icons/si";
 import { FaUser } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 
-import { Link } from "react-router-dom";
+type RegisterFormType = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const Register = () => {
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormType>();
+
+  const onSubmit: SubmitHandler<RegisterFormType> = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       {/* image */}
       <div className="hidden md:flex w-full h-full flex-1">
         <img src={RegisterImg} alt="" className="w-full h-full object-cover" />
+
+        <span className="w-[80px] h-[30px] absolute inset-0 top-4 left-10 cursor-pointer flex items-center gap-1 text-[20px]">
+          <SiPlanetscale />
+          <span className="font-bold">LOGO</span>
+        </span>
       </div>
 
       {/* form */}
@@ -24,7 +49,11 @@ const Register = () => {
           </p>
         </div>
 
-        <form action="" className="flex flex-col items-center py-6 px-4 gap-6">
+        <form
+          action=""
+          className="flex flex-col items-center py-6 px-4 gap-5"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div>
             <div className="flex items-center border-b-2 border-slate-400 pb-1">
               <label htmlFor="name" className="">
@@ -35,13 +64,18 @@ const Register = () => {
                 type="text"
                 placeholder="Enter full name"
                 className="w-[90%] outline-none bg-transparent border-none px-2 text-sm placeholder:text-sm"
+                {...register("name", { required: "This field is required!" })}
               />
             </div>
 
             {/* error */}
-            <p className="min-h-[14px] mt-1 text-xs text-red-600 font-medium italic">
-              This field is required
-            </p>
+            <div className="h-[20px] mt-1">
+              {errors.name && (
+                <p className="text-xs text-red-600 font-medium italic">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div>
@@ -54,13 +88,18 @@ const Register = () => {
                 type="email"
                 placeholder="Email"
                 className="text-sm w-[90%] outline-none border-none bg-transparent px-2 placeholder:text-sm"
+                {...register("email", { required: "This field is required!" })}
               />
             </div>
 
             {/* error */}
-            <p className="min-h-[14px] mt-1 text-xs text-red-600 font-medium italic">
-              This field is required
-            </p>
+            <div className="h-[20px] mt-1 ">
+              {errors.email && (
+                <p className="text-xs text-red-600 font-medium italic">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div>
@@ -73,13 +112,24 @@ const Register = () => {
                 type="password"
                 placeholder="Password"
                 className="text-sm w-[90%] outline-none border-none  bg-transparent px-2 placeholder:text-sm"
+                {...register("password", {
+                  required: "This field is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be 6 or more characters!",
+                  },
+                })}
               />
             </div>
 
             {/* error */}
-            <p className="min-h-[14px] mt-1 text-xs text-red-600 font-medium italic">
-              This field is required
-            </p>
+            <div className="h-[20px] mt-1 ">
+              {errors.password && (
+                <p className="text-xs text-red-600 font-medium italic">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div>
@@ -92,13 +142,25 @@ const Register = () => {
                 type="password"
                 placeholder="Confirm password"
                 className="text-sm w-[90%] outline-none border-none bg-transparent px-2 placeholder:text-sm"
+                {...register("confirmPassword", {
+                  required: "This field is required!",
+                  validate: (value) => {
+                    if (watch("password") != value) {
+                      return "Password does not match!";
+                    }
+                  },
+                })}
               />
             </div>
 
             {/* error */}
-            <p className="min-h-[14px] mt-1 text-xs text-red-600 font-medium italic">
-              This field is required
-            </p>
+            <div className="h-[20px] mt-1 ">
+              {errors.confirmPassword && (
+                <p className="text-xs text-red-600 font-medium italic">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center w-full mt-4">
@@ -111,7 +173,7 @@ const Register = () => {
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-semibold transition-[color] duration-300 hover:text-blue-800"
+              className="font-semibold transition-[color] duration-300 text-black hover:text-blue-800"
             >
               Log in
             </Link>
