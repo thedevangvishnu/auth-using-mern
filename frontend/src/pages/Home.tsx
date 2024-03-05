@@ -1,4 +1,3 @@
-import React from "react";
 import HeroBanner from "../assets/hero-bg-1.jpg";
 
 const Home = () => {
