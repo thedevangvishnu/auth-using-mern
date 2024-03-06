@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_APP_API_URL || "";
 export const register = async (formData: RegisterFormType) => {
   const response = await fetch(`${API_URL}/api/users/register`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -22,6 +23,7 @@ export const register = async (formData: RegisterFormType) => {
 export const login = async (formData: LoginFormType) => {
   const response = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -35,4 +37,16 @@ export const login = async (formData: LoginFormType) => {
   }
 
   return responseBody;
+};
+
+export const validateToken = async () => {
+  const response = await fetch(`${API_URL}/api/auth/validate-token`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Not logged in");
+  }
+
+  return await response.json();
 };
