@@ -1,11 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useMutation } from "react-query";
 
 import RegisterImg from "../assets/bg1.png";
 import { SiPlanetscale } from "react-icons/si";
 import { FaUser } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+import ButtonLoader from "../components/ButtonLoader";
+
+import * as request from "../request";
 
 export type RegisterFormType = {
   name: string;
@@ -16,6 +20,13 @@ export type RegisterFormType = {
 
 const Register = () => {
   const navigate = useNavigate();
+  const { mutate, isLoading } = useMutation(request.register, {
+    onSuccess: () => {
+      navigate("/");
+    },
+
+    onError: (error: Error) => {},
+  });
 
   const {
     register,
@@ -25,7 +36,7 @@ const Register = () => {
   } = useForm<RegisterFormType>();
 
   const onSubmit: SubmitHandler<RegisterFormType> = (data) => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -169,8 +180,12 @@ const Register = () => {
           </div>
 
           <div className="flex items-center w-full mt-4">
-            <button className="w-full py-3 bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900">
-              Sign up
+            <button
+              type="submit"
+              className="w-full py-3 bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900"
+            >
+              {isLoading ? <ButtonLoader /> : "Sign up"}
+              <ButtonLoader />
             </button>
           </div>
 

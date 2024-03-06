@@ -2,7 +2,17 @@
 export default {
   content: ["index.ts", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        btnLoader: {
+          "0%, 100%": { transform: "scale(0.6)" },
+          "50%": { transform: "scale(1.2)" },
+        },
+      },
+      animation: {
+        btnLoader: "1s ease-in infinite btnLoader",
+      },
+    },
   },
   plugins: [],
 };
