@@ -2,7 +2,7 @@ import React from "react";
 
 const ButtonLoader = () => {
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1 h-full items-center">
       <div
         className="w-[8px] h-[8px] rounded-[50%] bg-slate-100 animate-btnLoader"
         style={{ animationDelay: "-0.36s" }}

@@ -30,8 +30,8 @@ router.post(
         return res.status(400).json({ message: "User already exists" });
       }
 
-      user = await User.create(req.body);
-      user.save();
+      user = new User(req.body);
+      await user.save();
 
       const token = jwt.sign(
         { userId: user._id },

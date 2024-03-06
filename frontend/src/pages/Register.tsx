@@ -22,10 +22,13 @@ const Register = () => {
   const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(request.register, {
     onSuccess: () => {
+      console.log("Register success");
       navigate("/");
     },
 
-    onError: (error: Error) => {},
+    onError: (error: Error) => {
+      console.log("Error", error.message);
+    },
   });
 
   const {
@@ -182,10 +185,9 @@ const Register = () => {
           <div className="flex items-center w-full mt-4">
             <button
               type="submit"
-              className="w-full py-3 bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900"
+              className="w-full  bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900 h-[55px] flex justify-center items-center"
             >
               {isLoading ? <ButtonLoader /> : "Sign up"}
-              <ButtonLoader />
             </button>
           </div>
 
