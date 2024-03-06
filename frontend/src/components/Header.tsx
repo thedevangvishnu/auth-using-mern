@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { SiPlanetscale } from "react-icons/si";
+import { useAppContext } from "../contexts/AppContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAppContext();
 
   return (
     <header className="fixed top-0 left-0 z-30 w-full h-16">
@@ -15,14 +17,30 @@ const Header = () => {
           <span className="font-bold">LOGO</span>
         </div>
 
-        <ul className="flex">
+        <ul className="flex gap-4 items-center">
+          {isLoggedIn && (
+            <>
+              <li className="text-white font-semibold cursor-pointer transition-[color] hover:text-slate-200 duration-300">
+                Bookings
+              </li>
+            </>
+          )}
           <li>
-            <button
-              className="w-[100px] py-1 bg-transparent backdrop-blur-xl border-white border-2 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color, color] duration-300 hover:bg-white hover:text-stone-900"
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </button>
+            {isLoggedIn ? (
+              <button
+                className="w-[100px] py-1 bg-transparent backdrop-blur-xl border-white border-2 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color, color] duration-300 hover:bg-white hover:text-stone-900"
+                onClick={() => navigate("/login")}
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                className="w-[100px] py-1 bg-transparent backdrop-blur-xl border-white border-2 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color, color] duration-300 hover:bg-white hover:text-stone-900"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+            )}
           </li>
         </ul>
       </nav>
