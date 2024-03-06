@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useMutation } from "react-query";
 
 import RegisterImg from "../assets/bg2.png";
 import { SiPlanetscale } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+import ButtonLoader from "../components/ButtonLoader";
+
+import * as request from "../request";
 
 export type LoginFormType = {
   email: string;
@@ -14,6 +18,16 @@ export type LoginFormType = {
 const Login = () => {
   const navigate = useNavigate();
 
+  const { mutate, isLoading } = useMutation(request.login, {
+    onSuccess: () => {
+      navigate("/");
+    },
+
+    onError: (error: Error) => {
+      console.log("Error", error.message);
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -21,7 +35,7 @@ const Login = () => {
   } = useForm<LoginFormType>();
 
   const onSubmit: SubmitHandler<LoginFormType> = (data) => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -110,8 +124,11 @@ const Login = () => {
           </div>
 
           <div className="flex items-center w-full mt-4">
-            <button className="w-full py-3 bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900">
-              Sign in
+            <button
+              type="submit"
+              className="w-full  bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900 h-[55px] flex justify-center items-center"
+            >
+              {isLoading ? <ButtonLoader /> : "Sign in"}
             </button>
           </div>
 
