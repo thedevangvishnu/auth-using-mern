@@ -51,7 +51,7 @@ router.post(
 );
 
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-  return res.status(200).json({});
+  return res.status(200).json({ userId: req.userId });
 });
 
 export default router;
