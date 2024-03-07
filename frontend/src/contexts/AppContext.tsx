@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useQuery } from "react-query";
 import * as request from "../request";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 type AppContextType = {
   isLoggedIn: boolean;
@@ -9,7 +10,7 @@ type AppContextType = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  const { isError, isLoading } = useQuery(
+  const { isError, isLoading, isFetching } = useQuery(
     "validateToken",
     request.validateToken,
     {
@@ -23,6 +24,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         isLoggedIn: !isError,
       }}
     >
+      {(isLoading || isFetching) && <LoadingSpinner text="Loading..." />}
       {children}
     </AppContext.Provider>
   );

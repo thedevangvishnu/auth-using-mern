@@ -190,7 +190,7 @@ const Register = () => {
               type="submit"
               className="w-full  bg-black rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-stone-900 h-[55px] flex justify-center items-center"
             >
-              {isLoading ? <ButtonLoader /> : "Sign up"}
+              {isLoading ? <ButtonLoader bgColor="bg-slate-100" /> : "Sign up"}
             </button>
           </div>
 
