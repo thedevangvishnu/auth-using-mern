@@ -27,7 +27,7 @@ const Toast = ({ type, message, onClose }: ToastProps) => {
 
   return (
     <div
-      className={`absolute bottom-3 px-4 py-3 right-8 border-[1px] border-red-600 flex items-center justify-center z-30 rounded-[30px] bg-black shadow-lg ${
+      className={`absolute bottom-5 px-4 py-3 right-8 border-[1px] border-red-600 flex items-center justify-center z-50 rounded-[30px] bg-black shadow-lg ${
         hideToast ? "animate-hideToast" : "animate-showToast"
       }`}
     >

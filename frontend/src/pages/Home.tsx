@@ -13,7 +13,7 @@ const Home = () => {
       </div>
 
       {/* content */}
-      <div className="relative flex flex-col z-20 items-center gap-8 text-center ">
+      <div className="relative flex flex-col z-20 items-center gap-8 text-center px-2 ">
         <h2 className="text-6xl md:text-7xl uppercase font-bold text-white">
           Travel
         </h2>
