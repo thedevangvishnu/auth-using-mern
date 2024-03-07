@@ -1,4 +1,5 @@
 import HeroBanner from "../assets/hero-bg-1.jpg";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Home = () => {
   return (
@@ -32,6 +33,7 @@ const Home = () => {
 
       {/* overlay */}
       <div className="absolute bottom-0 left-0 z-10 w-full h-[500px] bg-gradient-to-t from-stone-950 to stone-300"></div>
+      <LoadingSpinner />
     </div>
   );
 };
