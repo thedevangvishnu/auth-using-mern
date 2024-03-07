@@ -2,13 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 
-import RegisterImg from "../assets/bg2.png";
 import { SiPlanetscale } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+import RegisterImg from "../assets/bg2.png";
 import FormBtn from "../components/FormBtn";
 
 import * as request from "../request";
+import { useAppContext } from "../contexts/AppContext";
 
 export type LoginFormType = {
   email: string;
@@ -16,17 +17,25 @@ export type LoginFormType = {
 };
 
 const Login = () => {
+  const { showToast } = useAppContext();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(request.login, {
     onSuccess: async () => {
+      showToast({
+        type: "SUCCESS",
+        message: "Login successfull!",
+      });
       await queryClient.invalidateQueries("validateToken");
       navigate("/");
     },
 
     onError: (error: Error) => {
-      console.log("Error", error.message);
+      showToast({
+        type: "ERROR",
+        message: error.message,
+      });
     },
   });
 

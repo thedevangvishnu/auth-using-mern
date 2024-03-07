@@ -2,14 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 
-import RegisterImg from "../assets/bg1.png";
 import { SiPlanetscale } from "react-icons/si";
 import { FaUser } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+import RegisterImg from "../assets/bg1.png";
 import FormBtn from "../components/FormBtn";
 
 import * as request from "../request";
+import { useAppContext } from "../contexts/AppContext";
 
 export type RegisterFormType = {
   name: string;
@@ -19,18 +20,25 @@ export type RegisterFormType = {
 };
 
 const Register = () => {
+  const { showToast } = useAppContext();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(request.register, {
     onSuccess: async () => {
-      console.log("Register success");
+      showToast({
+        type: "SUCCESS",
+        message: "Sign up successfull!",
+      });
       await queryClient.invalidateQueries("validateToken");
       navigate("/");
     },
 
     onError: (error: Error) => {
-      console.log("Error", error.message);
+      showToast({
+        type: "ERROR",
+        message: error.message,
+      });
     },
   });
 

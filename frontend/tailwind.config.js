@@ -10,14 +10,18 @@ export default {
         },
 
         showToast: {
-          "0%": { transform: "translateX(15px)" },
-          "50%": { transform: "translateX(-20px)" },
-          "100%": { transform: "translateY(0)" },
+          "0%": { transform: "translateX(20px)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        hideToast: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(20px)" },
         },
       },
       animation: {
         btnLoader: "1s ease-in infinite btnLoader",
-        showToast: "0.5s ease-in 1 forwards showToast",
+        showToast: "0.2s ease-in 1 forwards showToast",
+        hideToast: "0.2s ease-in 1 forwards hideToast",
       },
     },
   },
