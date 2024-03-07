@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { SiPlanetscale } from "react-icons/si";
 import { useAppContext } from "../contexts/AppContext";
 
+import HeaderLogoutBtn from "./HeaderLogoutBtn";
+
 const Header = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAppContext();
@@ -27,12 +29,7 @@ const Header = () => {
           )}
           <li>
             {isLoggedIn ? (
-              <button
-                className="w-[100px] py-1 bg-transparent backdrop-blur-xl border-white border-2 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color, color] duration-300 hover:bg-white hover:text-stone-900"
-                onClick={() => navigate("/login")}
-              >
-                Logout
-              </button>
+              <HeaderLogoutBtn />
             ) : (
               <button
                 className="w-[100px] py-1 bg-transparent backdrop-blur-xl border-white border-2 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color, color] duration-300 hover:bg-white hover:text-stone-900"
