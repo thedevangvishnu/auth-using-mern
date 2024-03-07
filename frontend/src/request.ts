@@ -50,3 +50,14 @@ export const validateToken = async () => {
 
   return await response.json();
 };
+
+export const logout = async () => {
+  const response = await fetch(`${API_URL}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error logging out!");
+  }
+};

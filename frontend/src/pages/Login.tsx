@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import RegisterImg from "../assets/bg2.png";
 import { SiPlanetscale } from "react-icons/si";
@@ -16,10 +16,12 @@ export type LoginFormType = {
 };
 
 const Login = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(request.login, {
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("validateToken");
       navigate("/");
     },
 
