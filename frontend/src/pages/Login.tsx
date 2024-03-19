@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useMutation, useQueryClient, useQuery } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { SiPlanetscale } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
@@ -20,10 +20,6 @@ const Login = () => {
   const { showToast } = useAppContext();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
-  const { refetch } = useQuery("googleLogin", request.googleLogin, {
-    enabled: false,
-  });
 
   const { mutate, isLoading } = useMutation(request.login, {
     onSuccess: async () => {
@@ -51,6 +47,10 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<LoginFormType> = (data) => {
     mutate(data);
+  };
+
+  const onGoogleSignClick = () => {
+    window.open("http://localhost:8000/api/auth/google", "_self");
   };
 
   return (
@@ -145,7 +145,7 @@ const Login = () => {
           <button
             type="button"
             className="w-full h-[55px]  bg-blue-600 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-blue-700  flex justify-center items-center"
-            onClick={() => refetch()}
+            onClick={onGoogleSignClick}
           >
             Google Sign in
           </button>

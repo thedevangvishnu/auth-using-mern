@@ -52,7 +52,7 @@ export const validateToken = async () => {
 };
 
 export const googleLogin = async () => {
-  const response = await fetch(`${API_URL}/api/auth/google`);
+  await fetch(`${API_URL}/api/auth/google/callback`);
 };
 
 export const logout = async () => {

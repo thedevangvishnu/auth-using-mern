@@ -1,5 +1,3 @@
-import React from "react";
-
 const ButtonLoader = ({ bgColor }: { bgColor: string }) => {
   return (
     <div className="flex gap-1 h-full items-center">
