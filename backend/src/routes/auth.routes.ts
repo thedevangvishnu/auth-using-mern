@@ -3,6 +3,7 @@ import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import passport from "passport";
+import { setupPassport } from "../services/passport";
 
 import { User } from "../models/user.model";
 import verifyToken from "../middlewares/auth.middleware";
@@ -53,10 +54,22 @@ router.post(
   }
 );
 
+// google login setup and routes
+setupPassport();
 router.use(passport.initialize());
 
-router.get("/google", (req: Request, res: Response) => {});
-router.get("/google/callback", (req: Request, res: Response) => {});
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:8000/login",
+    successRedirect: "http://localhost:8000/",
+  })
+);
 
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
   return res.status(200).json({ userId: req.userId });
