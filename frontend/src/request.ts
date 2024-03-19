@@ -51,6 +51,10 @@ export const validateToken = async () => {
   return await response.json();
 };
 
+export const googleLogin = async () => {
+  const response = await fetch(`${API_URL}/api/auth/google`);
+};
+
 export const logout = async () => {
   const response = await fetch(`${API_URL}/api/auth/logout`, {
     method: "POST",
