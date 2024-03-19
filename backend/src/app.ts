@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import passportSetup from "./services/passport";
 
 import userRoute from "./routes/users.routes";
 import authRoute from "./routes/auth.routes";

@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import passport from "passport";
 
 import { User } from "../models/user.model";
 import verifyToken from "../middlewares/auth.middleware";
@@ -51,6 +52,11 @@ router.post(
     return res.status(200).json({ userId: user._id });
   }
 );
+
+router.use(passport.initialize());
+
+router.get("/google", (req: Request, res: Response) => {});
+router.get("/google/callback", (req: Request, res: Response) => {});
 
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
   return res.status(200).json({ userId: req.userId });
