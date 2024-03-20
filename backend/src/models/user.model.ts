@@ -1,24 +1,26 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose, { Schema } from "mongoose";
 
 type UserType = {
   _id: string;
+  googleId?: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
 };
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  googleId: { type: String },
+  password: { type: String },
 });
 
-userSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 8);
+userSchema.path("password").validate(function (value) {
+  if (this.googleId) {
+    return true;
   }
-  next();
-});
+
+  return value !== null && value !== undefined;
+}, "Password is required when not using Google sign on");
 
 export const User = mongoose.model<UserType>("user", userSchema);

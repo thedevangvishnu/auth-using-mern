@@ -1,6 +1,8 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import passport from "passport";
 
 import { User } from "../models/user.model";
 
@@ -30,7 +32,13 @@ router.post(
         return res.status(400).json({ message: "User already exists" });
       }
 
+      if (!req.body.googleId) {
+        // Hash the password if the user is signing up manually
+        req.body.password = await bcrypt.hash(req.body.password, 8);
+      }
+
       user = new User(req.body);
+
       await user.save();
 
       const token = jwt.sign(
@@ -53,6 +61,11 @@ router.post(
       return res.status(500).json({ message: "Something went wrong!" });
     }
   }
+);
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
 export default router;

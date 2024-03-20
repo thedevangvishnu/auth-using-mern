@@ -1,9 +1,8 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import passport from "passport";
-import { setupPassport } from "../services/passport";
 
 import { User } from "../models/user.model";
 import verifyToken from "../middlewares/auth.middleware";
@@ -31,7 +30,7 @@ router.post(
       return res.status(400).json({ message: "Invalid credentials!" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password as string);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials!" });
     }
@@ -54,10 +53,6 @@ router.post(
   }
 );
 
-// google login setup and routes
-setupPassport();
-router.use(passport.initialize());
-
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
@@ -66,8 +61,8 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:8000/login",
-    successRedirect: "http://localhost:8000/",
+    failureRedirect: "/login",
+    successRedirect: "/",
   })
 );
 

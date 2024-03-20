@@ -1,12 +1,48 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
+import passport from "passport";
+import cookieSession from "cookie-session";
 
 import userRoute from "./routes/users.routes";
 import authRoute from "./routes/auth.routes";
 
+import { setupPassport } from "./services/passport";
+
 export const app = express();
+
+app.use(
+  cookieSession({
+    name: "session",
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: process.env.NODE_ENV === "production",
+    keys: [
+      process.env.COOKIE_KEY_1 as string,
+      process.env.COOKIE_KEY_2 as string,
+    ],
+  })
+);
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.session && !req.session.regenerate) {
+    req.session.regenerate = (cb: () => void) => {
+      cb();
+    };
+  }
+
+  if (req.session && !req.session.save) {
+    req.session.save = (cb: () => void) => {
+      cb();
+    };
+  }
+  next();
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+setupPassport();
 
 app.use(cookieParser());
 app.use(express.json());

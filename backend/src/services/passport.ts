@@ -1,7 +1,18 @@
 import passport from "passport";
 import passportGoogle from "passport-google-oauth20";
+import mongoose from "mongoose";
+import { User } from "../models/user.model";
 
 export const setupPassport = () => {
+  passport.serializeUser((user: any, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(async (id: string, done: any) => {
+    const user = await User.findById(id);
+    done(null, user);
+  });
+
   const GoogleStrategy = passportGoogle.Strategy;
   passport.use(
     new GoogleStrategy(
@@ -11,7 +22,26 @@ export const setupPassport = () => {
         callbackURL: "/api/auth/google/callback",
         scope: ["email", "profile"],
       },
-      (accessToken, refreshToken, profile, done) => {}
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          let user = await User.findOne({ googleId: profile.id });
+
+          if (!user) {
+            user = new User({
+              googleId: profile.id,
+              name: profile.displayName,
+              email: profile._json.email,
+            });
+
+            await user.save();
+            done(null, user);
+          } else {
+            done(null, user);
+          }
+        } catch (error) {
+          done(error as Error, undefined);
+        }
+      }
     )
   );
 };
