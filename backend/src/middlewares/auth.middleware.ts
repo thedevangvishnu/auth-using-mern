@@ -17,8 +17,8 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     if (!isLoggedIn) {
       return res.status(401).json({ message: "Unautorized" });
     }
+
     const userId = user.id;
-    console.log(userId);
     req.userId = userId;
     next();
   } else {
