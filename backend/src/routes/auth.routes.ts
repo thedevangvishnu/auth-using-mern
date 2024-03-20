@@ -66,9 +66,15 @@ router.get(
   })
 );
 
-router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-  return res.status(200).json({ userId: req.userId });
-});
+router.get(
+  "/validate-token",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    const user = await User.findOne({ _id: req.userId });
+    const name = user?.name;
+    return res.status(200).json({ userId: req.userId, name });
+  }
+);
 
 router.post("/logout", (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
