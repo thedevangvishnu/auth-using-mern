@@ -8,7 +8,7 @@ import cookieSession from "cookie-session";
 import userRoute from "./routes/users.routes";
 import authRoute from "./routes/auth.routes";
 
-import { setupPassport } from "./services/passport";
+import { setupGoogleStrategy, setupSession } from "./services/passport";
 
 export const app = express();
 
@@ -42,10 +42,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-setupPassport();
+setupSession();
+setupGoogleStrategy();
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: process.env.CLIENT_URL,

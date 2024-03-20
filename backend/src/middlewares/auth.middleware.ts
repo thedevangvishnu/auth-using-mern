@@ -10,18 +10,31 @@ declare global {
 }
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies["auth_token"];
+  if (req.user) {
+    const user: any = req.user as any;
+    const isLoggedIn = req.isAuthenticated() && req.user;
 
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized!" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
-    req.userId = (decoded as JwtPayload).userId;
+    if (!isLoggedIn) {
+      return res.status(401).json({ message: "Unautorized" });
+    }
+    const userId = user.id;
+    console.log(userId);
+    req.userId = userId;
     next();
-  } catch (error) {
-    return res.status(401).json({ message: "Unauthorized!" });
+  } else {
+    const token = req.cookies["auth_token"];
+
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized!" });
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+      req.userId = (decoded as JwtPayload).userId;
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: "Unauthorized!" });
+    }
   }
 };
 

@@ -1,9 +1,8 @@
 import passport from "passport";
 import passportGoogle from "passport-google-oauth20";
-import mongoose from "mongoose";
 import { User } from "../models/user.model";
 
-export const setupPassport = () => {
+export const setupSession = () => {
   passport.serializeUser((user: any, done) => {
     done(null, user.id);
   });
@@ -12,7 +11,9 @@ export const setupPassport = () => {
     const user = await User.findById(id);
     done(null, user);
   });
+};
 
+export const setupGoogleStrategy = () => {
   const GoogleStrategy = passportGoogle.Strategy;
   passport.use(
     new GoogleStrategy(
