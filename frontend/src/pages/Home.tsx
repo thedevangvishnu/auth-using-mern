@@ -1,6 +1,9 @@
 import HeroBanner from "../assets/hero-bg-1.jpg";
+import { useAppContext } from "../contexts/AppContext";
 
 const Home = () => {
+  const { isLoggedIn, username } = useAppContext();
+
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center">
       {/* image */}
@@ -14,6 +17,13 @@ const Home = () => {
 
       {/* content */}
       <div className="relative flex flex-col z-20 items-center gap-8 text-center px-2 ">
+        {isLoggedIn && (
+          <div className="mb-[-1rem]">
+            <p className="text-white text-xl font-semibold italic">
+              Welcome back {username}!
+            </p>
+          </div>
+        )}
         <h2 className="text-6xl md:text-7xl uppercase font-bold text-white">
           Travel
         </h2>
