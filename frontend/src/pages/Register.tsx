@@ -11,6 +11,7 @@ import FormBtn from "../components/FormBtn";
 
 import * as request from "../request";
 import { useAppContext } from "../contexts/AppContext";
+import GoogleBtn from "../components/GoogleBtn";
 
 export type RegisterFormType = {
   name: string;
@@ -70,7 +71,7 @@ const Register = () => {
 
       {/* form */}
       <div className="w-full flex flex-col flex-1 items-center justify-center px-4 py-6 h-full bg-stone-100">
-        <div className="flex flex-col items-center mb-6">
+        <div className="flex flex-col items-center mb-3">
           <h2 className="text-3xl  mb-4 md:mb-6 text-center font-semibold text-black">
             Create Account
           </h2>
@@ -81,7 +82,7 @@ const Register = () => {
 
         <form
           action=""
-          className="flex flex-col items-center py-6 px-4 gap-5"
+          className="flex flex-col items-center py-6 px-4 gap-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
@@ -196,6 +197,8 @@ const Register = () => {
           <div className="flex items-center w-full mt-4">
             <FormBtn isLoading={isLoading} text="Sign up" />
           </div>
+
+          <GoogleBtn text="Google Sign Up" endpoint="users" />
 
           <p className="text-sm text-slate-700 text-center">
             Already have an account?{" "}

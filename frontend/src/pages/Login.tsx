@@ -10,6 +10,7 @@ import FormBtn from "../components/FormBtn";
 
 import * as request from "../request";
 import { useAppContext } from "../contexts/AppContext";
+import GoogleBtn from "../components/GoogleBtn";
 
 export type LoginFormType = {
   email: string;
@@ -47,10 +48,6 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<LoginFormType> = (data) => {
     mutate(data);
-  };
-
-  const onGoogleSignClick = () => {
-    window.open("http://localhost:8000/api/auth/google", "_self");
   };
 
   return (
@@ -142,13 +139,7 @@ const Login = () => {
             <FormBtn isLoading={isLoading} text="Sign in" />
           </div>
 
-          <button
-            type="button"
-            className="w-full h-[55px]  bg-blue-600 rounded-[3rem] text-white uppercase font-semibold tracking-wider transition-[background-color] duration-300 hover:bg-blue-700  flex justify-center items-center"
-            onClick={onGoogleSignClick}
-          >
-            Google Sign in
-          </button>
+          <GoogleBtn text="Google Sign In" endpoint="auth" />
 
           <p className="text-sm text-slate-700 text-center">
             Don't have an account?{" "}
