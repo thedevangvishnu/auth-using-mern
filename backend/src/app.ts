@@ -18,6 +18,8 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000,
     secure: true,
     httpOnly: true,
+    domain: "auth-using-mern.onrender.com", // Adjust based on your domain
+    path: "/",
     keys: [
       process.env.COOKIE_KEY_1 as string,
       process.env.COOKIE_KEY_2 as string,
