@@ -20,7 +20,8 @@ export const setupGoogleStrategy = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID as string,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        callbackURL: "/api/auth/google/callback",
+        callbackURL:
+          "https://auth-using-mern.onrender.com/api/auth/google/callback",
         scope: ["email", "profile"],
       },
       async (accessToken, refreshToken, profile, done) => {
