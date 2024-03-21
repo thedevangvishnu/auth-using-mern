@@ -1,0 +1,16 @@
+{
+  "name": "auth-using-mern",
+  "version": "1.0.0",
+  "description": "In this repo, I have created a simple authentication system using MERN.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-client": "npm install --prefix frontend",
+    "install-server": "npm install --prefix backend",
+    "install": "npm run install-client && npm run install-server",
+    "deploy": "npm run build --prefix frontend && npm run watch --prefix backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

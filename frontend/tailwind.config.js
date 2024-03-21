@@ -15,7 +15,7 @@ export default {
         },
         hideToast: {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(20px)" },
+          "100%": { transform: "translateX(20Lpx)" },
         },
       },
       animation: {
