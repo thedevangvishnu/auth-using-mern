@@ -5,7 +5,10 @@ type GoogleBtnType = {
 
 const GoogleBtn = ({ text, endpoint }: GoogleBtnType) => {
   const onGoogleSignClick = () => {
-    window.open(`http://localhost:8000/api/${endpoint}/google`, "_self");
+    window.open(
+      `https://auth-using-mern.onrender.com/api/${endpoint}/google`,
+      "_self"
+    );
   };
 
   return (
