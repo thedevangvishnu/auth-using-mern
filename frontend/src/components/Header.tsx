@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 z-30 w-full h-16">
-      <nav className="relative w-full h-full flex items-center justify-between px-10 py-6">
+      <nav className="relative w-full h-full flex items-center justify-between px-4 md:px-10 py-6">
         <div
           className="w-[80px] h-[30px] cursor-pointer flex items-center gap-1 text-[20px] text-white"
           onClick={() => navigate("/")}
