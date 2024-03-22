@@ -19,7 +19,7 @@ app.use(
     secure: true,
     httpOnly: true,
     domain: process.env.CLIENT_URL,
-    sameSite: "lax",
+    sameSite: "none",
     path: "/",
     keys: [
       process.env.COOKIE_KEY_1 as string,
