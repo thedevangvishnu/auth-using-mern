@@ -19,6 +19,7 @@ app.use(
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     domain: process.env.CLIENT_URL,
+    sameSite: "lax",
     path: "/",
     keys: [
       process.env.COOKIE_KEY_1 as string,
