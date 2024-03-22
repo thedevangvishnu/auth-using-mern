@@ -16,7 +16,7 @@ app.use(
   cookieSession({
     name: "session",
     maxAge: 24 * 60 * 60 * 1000,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     httpOnly: true,
     domain: process.env.CLIENT_URL,
     sameSite: "lax",
